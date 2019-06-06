@@ -1,27 +1,39 @@
-# ChatBot
+# React-redux-boilerplate
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.1.
+[![Build Status](https://semaphoreci.com/api/v1/nimjetushar/react-redux-boilerplate/branches/master/shields_badge.svg)](https://semaphoreci.com/nimjetushar/react-redux-boilerplate)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=nimjetushar/React-redux-boilerplate)](https://dependabot.com)
+<br/>
+[![GitHub license](https://img.shields.io/github/license/nimjetushar/React-redux-boilerplate.svg)](https://github.com/nimjetushar/React-redux-boilerplate/blob/master/LICENSE)
+[![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/nimjetushar/react-redux-boilerplate)
 
-## Development server
+This project contains the boiler plate for react js having integration with redux for state management and scss as css pre-processor.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```sh
+# clone it
+git clone https://github.com/nimjetushar/React-redux-boilerplate.git
+cd React-redux-boilerplate
 
-## Code scaffolding
+# Make it your own
+rm -rf .git && git init && npm init
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Install dependencies
+npm install
 
-## Build
+# Start development live-reload server
+npm start
+# this is start the server at http://localhost:3000
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+# Create build:
+npm run build
 
-## Running unit tests
+# Run Test:
+npm run test
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Run linting:
+npm run lint
+```
 
-## Running end-to-end tests
+## Dependency status
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+[![dependencies Status](https://david-dm.org/nimjetushar/React-redux-boilerplate/status.svg)](https://david-dm.org/nimjetushar/React-redux-boilerplate)
+[![devDependencies Status](https://david-dm.org/nimjetushar/React-redux-boilerplate/dev-status.svg)](https://david-dm.org/nimjetushar/React-redux-boilerplate?type=dev)
