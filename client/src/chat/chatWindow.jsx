@@ -32,8 +32,13 @@ class ChatWindow extends Component {
         const msgObj = {
             message: this.state.message,
             user: {}
-        },
-            receivedMsg = this.state.receivedMsg.concat([msgObj]);
+        };
+
+        if (!this.state.message) {
+            return;
+        }
+
+        const receivedMsg = this.state.receivedMsg.concat([msgObj]);
         this.setState({ receivedMsg: receivedMsg });
     }
 
