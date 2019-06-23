@@ -2,18 +2,43 @@ import './chat.scss';
 import React, { Component, Fragment } from 'react';
 import SendMessage from './sendMessage';
 import ReceivedMessage from './receivedMessage';
+import { User } from '../proptypes';
+import { createConnection } from './connection';
 
 class ChatWindow extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             receivedMsg: [],
-            message: ''
+            message: '',
+            username: ''
         };
+    }
 
-        this.send = this.send.bind(this);
-        this.inputHandler = this.inputHandler.bind(this);
+    componentWillReceiveProps(props) {
+        if (props.users && props.users.to && props.users.from) {
+            if (this.socket) {
+                return;
+            }
+            this.setState({ username: props.users.from[0] });
+            this.socketConnection(props);
+        }
+    }
+
+    socketConnection(props) {
+        const socket = createConnection();
+        this.socket = socket;
+        socket.emit('join', { chatUser: props.users.to, currentUser: props.users.from });
+
+        socket.on('new_message', function (msg) {
+            if (props.users.from !== msg.user) {
+                msg.received = true;
+            }
+            this.setState({ receivedMsg: this.state.receivedMsg.concat([msg]) }, () => {
+                this.scrollToBottom();
+            });
+        }.bind(this));
     }
 
     renderMessage() {
@@ -28,22 +53,33 @@ class ChatWindow extends Component {
         </Fragment>
     }
 
-    send() {
-        const msgObj = {
-            message: this.state.message,
-            user: {}
-        };
+    scrollToBottom() {
+        const ele = document.getElementsByClassName("messages-content")[0];
+        ele.scrollTop = ele.scrollHeight;
+    }
 
-        if (!this.state.message) {
+    send() {
+        if (!this.state.message && this.socket) {
             return;
         }
 
-        const receivedMsg = this.state.receivedMsg.concat([msgObj]);
-        this.setState({ receivedMsg: receivedMsg });
+        this.socket.emit('join', {
+            chatUser: this.props.users.to,
+            currentUser: this.props.users.from,
+            message: this.state.message
+        });
+        this.setState({ message: '' });
     }
 
     inputHandler(event) {
-        this.setState({ message: event.target.value });
+        const message = event.target.value;
+        this.setState({ message: message.trim() });
+    }
+
+    handleKeyDown(e) {
+        if (e.key === 'Enter') {
+            this.send();
+        }
     }
 
     render() {
@@ -53,7 +89,7 @@ class ChatWindow extends Component {
                     <div className="chat-title">
                         <h1></h1>
                         <figure className="avatar">
-                            <span></span>
+                            <span>{this.state.username}</span>
                         </figure>
                     </div>
                     <div className="messages">
@@ -65,14 +101,19 @@ class ChatWindow extends Component {
                         <textarea name="message" type="text"
                             className="message-input" placeholder="Type message..."
                             value={this.state.message}
-                            onChange={this.inputHandler}></textarea>
-                        <button type="submit" className="message-submit" onClick={this.send}>Send</button>
+                            onChange={this.inputHandler.bind(this)}
+                            onKeyDown={this.handleKeyDown.bind(this)}></textarea>
+                        <button type="submit" className="message-submit" onClick={this.send.bind(this)}>Send</button>
                     </div>
                 </div>
                 <div className="bg"></div>
             </Fragment>
         );
     }
+}
+
+ChatWindow.propTypes = {
+    users: User
 }
 
 export default ChatWindow;

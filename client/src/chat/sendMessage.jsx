@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { MessageDetail } from '../proptypes';
 
 class SendMessage extends Component {
     render() {
@@ -10,9 +10,7 @@ class SendMessage extends Component {
 }
 
 SendMessage.propTypes = {
-    detail: PropTypes.shape({
-        message: PropTypes.string
-    })
+    detail: MessageDetail
 };
 
 export default SendMessage;

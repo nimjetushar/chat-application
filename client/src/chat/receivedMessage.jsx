@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
+import { MessageDetail } from '../proptypes';
 
 class ReceivedMessage extends Component {
     render() {
         return (
             <div className="message new">
                 <figure className="avatar">
-                    <span></span>
+                    <span>{this.props.detail.user[0]}</span>
                 </figure>
-                <span>hi</span>
+                <span>{this.props.detail.message}</span>
             </div>
         );
     }
 }
+
+ReceivedMessage.propTypes = {
+    detail: MessageDetail
+};
 
 export default ReceivedMessage;

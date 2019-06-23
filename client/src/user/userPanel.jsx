@@ -1,13 +1,15 @@
 import './userPanel.scss';
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class UserPanel extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             isPanelOpen: false,
+            readonlyFrom: false,
             user: {
                 from: '',
                 to: ''
@@ -20,8 +22,15 @@ class UserPanel extends Component {
         this.setState({ isPanelOpen: !this.state.isPanelOpen });
     }
 
-    inputHandler() {
+    inputHandler(event) {
+        const { name, value } = event.target;
+        const user = Object.assign({}, this.state.user, { [name]: value });
+        this.setState({ user });
+    }
 
+    submit() {
+        this.props.callback(this.state.user);
+        this.setState({ isPanelOpen: false, readonlyFrom: true });
     }
 
     renderPanel() {
@@ -30,14 +39,14 @@ class UserPanel extends Component {
                 <div className="input-fields">
                     <label>user name</label>
                     <input name="from" value={this.state.user.from}
-                        onChange={this.inputHandler} />
+                        onChange={this.inputHandler} readOnly={this.state.readonlyFrom} />
                 </div>
                 <div className="input-fields">
                     <label>chat with</label>
                     <input name="to" value={this.state.user.to}
                         onChange={this.inputHandler} />
                 </div>
-                <button>Submit</button>
+                <button onClick={this.submit.bind(this)}>Submit</button>
             </div>
         }
     }
@@ -50,6 +59,10 @@ class UserPanel extends Component {
             </div>
         );
     }
+}
+
+UserPanel.propTypes = {
+    callback: PropTypes.func.isRequired
 }
 
 export default UserPanel;
