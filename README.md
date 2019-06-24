@@ -6,3 +6,9 @@
 [![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/nimjetushar/chat-application)
 
 The project containes chat application with server and client.
+
+## Getting started
+
+1) Install all the dependencies
+2) start server using `npm start`
+3) start multiple instance of client using `npm start` on different port. Port can be edited in package.json under buildconfig -> port
